@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["webdevbranch"]
+    branches: ["master"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -46,4 +46,4 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           # Set the base URL for your website
-          base_url: '/cs202'
+          base_url: ''
