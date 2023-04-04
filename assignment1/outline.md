@@ -32,15 +32,6 @@ Sailing is an exciting and rewarding sport that combines physical activity with 
 
 ---
 
-Website 4: Overcoming Challenges: An ADHD Journey
-
-Title: Overcoming Challenges: An ADHD Journey
-
-Content:
-During my journey of learning to sail, I encountered numerous challenges related to my ADHD. Keeping track of my work, staying organized, and managing deadlines was difficult. However, with perseverance, support from my mentors, and finding the right tools to help me succeed, I was able to overcome these obstacles and continue pursuing my passion for sailing.
-
----
-
 Website 5: Sailing Courses at Sail Sand Point
 
 Title: Sailing Courses at Sail Sand Point
@@ -51,12 +42,3 @@ Sail Sand Point offers a variety of sailing courses for beginners to advanced sa
 1. Intro to Sailing: Learn the basics of sailing and gain confidence on the water.
 2. Intermediate Sailing: Hone your skills and learn advanced techniques.
 3. Advanced Sailing: Master sailing skills and prepare for racing or long-distance sailing.
-
----
-
-Website 6: Reflections and Future Endeavors
-
-Title: Reflections and Future Endeavors
-
-Content:
-While my journey of learning to sail has not been without its challenges, the experiences and lessons I have gained along the way have been invaluable. As I continue to sail and explore new horizons, I strive to share my passion for sailing with others and make the world a more compassionate place. Whether it is teaching sailing, supporting fellow sailors, or simply enjoying the beauty of Lake Washington, sailing will always have a special place in my heart.
