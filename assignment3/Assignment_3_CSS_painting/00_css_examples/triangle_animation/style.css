@@ -1,0 +1,37 @@
+body{ 
+ 
+    background-color: beige;
+}
+#black {
+    position: absolute;
+    left: 100px;  
+    top: 100px;
+
+    width: 0;
+    height: 0;
+    border-top: 100px solid transparent;
+    border-right: 200px solid black;
+    border-bottom: 100px solid transparent;
+
+    animation: mymove 5s infinite;
+
+}
+
+
+/* 
+#black creates a triangle shape. You can read more about CSS shapes here: https://css-tricks.com/the-shapes-of-css/
+
+The animation creates a 5 second loop, the startign and stopping position of the animation, or key frames are described below. 
+You can read more about CSS animations here: https://www.w3schools.com/css/css3_animations.asp
+
+*/
+
+@keyframes mymove {
+    from {top: 100px;}
+    to {top: 300px;}
+  }
+
+
+
+
+

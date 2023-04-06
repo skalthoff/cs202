@@ -1,0 +1,33 @@
+body{ 
+ 
+    background-color: beige;
+}
+#red {
+    position: absolute;
+    right: 100px;  
+    top: 100px;
+
+    width: 400px;
+    height: 400px;
+    background-color: red;
+    transform: rotate(45deg);
+
+    transition: background-color 2s;
+
+}
+
+/* the #red is a standard box shape but is rotated by 45 degrees. You can read more about rotation here: https://www.w3schools.com/cssref/css3_pr_rotation.asp 
+The transition is used to animate the color change that is described in the #red:hover below. 
+*/
+
+
+#red:hover {
+background-color: yellow;
+}
+
+/* When the mouse hovers over #red, the background color changes. You can read more about hover here: https://www.w3schools.com/cssref/sel_hover.asp */
+
+
+
+
+
