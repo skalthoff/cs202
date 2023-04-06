@@ -5,13 +5,13 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding: 0;
+  padding: 3;
 }
 
 /* Container */
 .container {
   max-width: 1000px;
-  margin: 20px auto; /* Add margin to create distance from the edge of the screen */
+  margin: 0 auto; /* Remove the 200px top and bottom margin */
   padding: 0 20px;
 }
 
@@ -35,13 +35,13 @@ main {
 
 /* Images */
 img {
-  max-width: 60%; /* Reduce the image size */
+  max-width: 100%; /* Increase the image size to fit its container */
   height: auto;
   display: block;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
-  filter: blur(0.4px); /* Decrease the blur effect */
+  filter: blur(0.2px); /* Decrease the blur effect further */
 }
 
 /* Tables */
