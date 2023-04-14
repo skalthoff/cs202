@@ -63,22 +63,3 @@ window.onload = function () {
         processImage(defaultImg);
     };
 };
-//... (previous code remains the same)
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Load default image
-    const defaultImg = new Image();
-    defaultImg.src = 'default.jpg';
-    defaultImg.onload = function () {
-        processImage(defaultImg);
-    };
-
-    document.getElementById('file-input').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        img.onload = function () {
-            processImage(img);
-        };
-    });
-});
