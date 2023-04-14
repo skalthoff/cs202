@@ -20,43 +20,65 @@ function handleMouseMove(e) {
 let newWidth;
 let newHeight;
 
-document.getElementById('file-input').addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    const img = new Image();
-    img.src = URL.createObjectURL(file);
-    img.onload = function () {
-        const spinner = document.getElementById('spinner');
-        spinner.style.display = 'block';
+function processImage(img) {
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'block';
 
-        setTimeout(() => {
-            const aspectRatio = img.height / img.width;
-            newWidth = 30;
-            newHeight = Math.round(newWidth * aspectRatio);
-            const canvas = document.createElement('canvas');
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, newWidth, newHeight);
-            const container = document.getElementById('container');
-            container.innerHTML = '';
-            container.style.width = `${newWidth * 10}px`;
-            container.style.height = `${newHeight * 10}px`;
-            for (let y = 0; y < newHeight; y++) {
-                for (let x = 0; x < newWidth; x++) {
-                    const pixelData = ctx.getImageData(x, y, 1, 1).data;
-                    const pixelDiv = document.createElement('div');
-                    pixelDiv.style.backgroundColor = `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
-                    pixelDiv.classList.add('pixel');
-                    container.appendChild(pixelDiv);
-                }
+    setTimeout(() => {
+        const aspectRatio = img.height / img.width;
+        newWidth = 30;
+        newHeight = Math.round(newWidth * aspectRatio);
+        const canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        const container = document.getElementById('container');
+        container.innerHTML = '';
+        container.style.width = `${newWidth * 10}px`;
+        container.style.height = `${newHeight * 10}px`;
+        for (let y = 0; y < newHeight; y++) {
+            for (let x = 0; x < newWidth; x++) {
+                const pixelData = ctx.getImageData(x, y, 1, 1).data;
+                const pixelDiv = document.createElement('div');
+                pixelDiv.style.backgroundColor = `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
+                pixelDiv.classList.add('pixel');
+                container.appendChild(pixelDiv);
             }
-            spinner.style.display = 'none';
-            container.addEventListener('mousemove', handleMouseMove);
-            container.addEventListener('mouseleave', () => {
-                container.childNodes.forEach((pixel) => {
-                    pixel.style.transform = 'scale(1)';
-                });
+        }
+        spinner.style.display = 'none';
+        container.addEventListener('mousemove', handleMouseMove);
+        container.addEventListener('mouseleave', () => {
+            container.childNodes.forEach((pixel) => {
+                pixel.style.transform = 'scale(1)';
             });
-        }, 500);
+        });
+    }, 500);
+}
+// Load default image
+window.onload = function () {
+    const defaultImg = new Image();
+    defaultImg.src = 'default.jpg';
+    defaultImg.onload = function () {
+        processImage(defaultImg);
     };
+};
+//... (previous code remains the same)
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Load default image
+    const defaultImg = new Image();
+    defaultImg.src = 'default.jpg';
+    defaultImg.onload = function () {
+        processImage(defaultImg);
+    };
+
+    document.getElementById('file-input').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = function () {
+            processImage(img);
+        };
+    });
 });
