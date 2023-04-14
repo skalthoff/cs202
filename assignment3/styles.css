@@ -18,8 +18,8 @@ body {
 .pixel {
     width: 10px;
     height: 10px;
+    transition: all 0.2s;
     box-sizing: border-box;
-    filter: grayscale(100%);
 }
 input[type="file"] {
     display: none;
@@ -44,12 +44,6 @@ label {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-.flashlight {
-    display: none;
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
 }
 @keyframes spin {
     0% { transform: translate(-50%, -50%) rotate(0deg); }

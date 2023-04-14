@@ -1,14 +1,37 @@
-function loadImage(src, pixelWidth) {
+function distanceBetweenPoints(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+function handleMouseMove(e) {
+    const containerRect = container.getBoundingClientRect();
+    const mouseX = e.clientX - containerRect.left;
+    const mouseY = e.clientY - containerRect.top;
+
+    container.childNodes.forEach((pixel, index) => {
+        const pixelX = (index % newWidth) * 10 + 5;
+        const pixelY = Math.floor(index / newWidth) * 10 + 5;
+        const distance = distanceBetweenPoints(mouseX, mouseY, pixelX, pixelY);
+        const maxDistance = 50;
+        const scale = Math.min(1, distance / maxDistance);
+        pixel.style.transform = `scale(${scale})`;
+    });
+}
+
+let newWidth;
+let newHeight;
+
+document.getElementById('file-input').addEventListener('change', function (e) {
+    const file = e.target.files[0];
     const img = new Image();
-    img.src = src;
+    img.src = URL.createObjectURL(file);
     img.onload = function () {
         const spinner = document.getElementById('spinner');
         spinner.style.display = 'block';
 
         setTimeout(() => {
             const aspectRatio = img.height / img.width;
-            const newWidth = pixelWidth;
-            const newHeight = Math.round(newWidth * aspectRatio);
+            newWidth = 30;
+            newHeight = Math.round(newWidth * aspectRatio);
             const canvas = document.createElement('canvas');
             canvas.width = newWidth;
             canvas.height = newHeight;
@@ -28,44 +51,12 @@ function loadImage(src, pixelWidth) {
                 }
             }
             spinner.style.display = 'none';
-            initFlashlight(container);
+            container.addEventListener('mousemove', handleMouseMove);
+            container.addEventListener('mouseleave', () => {
+                container.childNodes.forEach((pixel) => {
+                    pixel.style.transform = 'scale(1)';
+                });
+            });
         }, 500);
     };
-}
-
-function initFlashlight(container) {
-    const flashlight = document.getElementById('flashlight');
-    const flashlightRadius = 80;
-    const flashlightDiameter = flashlightRadius * 2;
-
-    flashlight.style.width = `${flashlightDiameter}px`;
-    flashlight.style.height = `${flashlightDiameter}px`;
-
-    container.addEventListener('mousemove', (e) => {
-        flashlight.style.display = 'block';
-        flashlight.style.top = `${e.pageY - flashlightRadius}px`;
-        flashlight.style.left = `${e.pageX - flashlightRadius}px`;
-
-        const mask = `radial-gradient(circle ${flashlightRadius}px at ${e.pageX - container.offsetLeft}px ${e.pageY - container.offsetTop}px, rgba(0,0,0,0), rgba(0,0,0,0.8))`;
-        container.style.backgroundImage = mask;
-    });
-
-    container.addEventListener('mouseleave', () => {
-        flashlight.style.display = 'none';
-        container.style.backgroundImage = 'none';
-    });
-}
-
-document.getElementById('file-input').addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    const pixelWidth = parseInt(document.getElementById('width-value').textContent);
-    loadImage(URL.createObjectURL(file), pixelWidth);
 });
-
-const widthSlider = document.getElementById('width-slider');
-widthSlider.addEventListener('input', function (e) {
-    document.getElementById('width-value').textContent = e.target.value;
-});
-
-// Load the default image when the site loads
-loadImage('default.jpg', 30);
