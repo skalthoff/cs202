@@ -3,17 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Counter Composition XIII</title>
+    <title>Image Pixel Hover Effect</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .pixel {
+            width: 10px;
+            height: 10px;
+            transition: all 0.2s;
+        }
+        .pixel:hover {
+            transform: scale(1.5);
+        }
+        input[type="file"] {
+            display: none;
+        }
+        label {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="rectangle red"></div>
-        <div class="rectangle blue"></div>
-        <div class="rectangle yellow"></div>
-        <div class="rectangle white"></div>
-        <div class="triangle yellow-triangle"></div>
-        <div class="triangle red-triangle"></div>
+    <div>
+        <label for="file-input">Upload Image</label>
+        <input type="file" id="file-input" accept="image/*">
     </div>
+    <div class="container" id="container"></div>
+
+    <script>
+        document.getElementById('file-input').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = function () {
+                const aspectRatio = img.height / img.width;
+                const newWidth = 30;
+                const newHeight = Math.round(newWidth * aspectRatio);
+                const canvas = document.createElement('canvas');
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                const container = document.getElementById('container');
+                container.innerHTML = '';
+                container.style.width = `${newWidth * 10}px`;
+                for (let y = 0; y < newHeight; y++) {
+                    for (let x = 0; x < newWidth; x++) {
+                        const pixelData = ctx.getImageData(x, y, 1, 1).data;
+                        const pixelDiv = document.createElement('div');
+                        pixelDiv.style.backgroundColor = `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
+                        pixelDiv.classList.add('pixel');
+                        container.appendChild(pixelDiv);
+                    }
+                }
+            };
+        });
+    </script>
 </body>
 </html>
