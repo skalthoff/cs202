@@ -4,144 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Pixel Hover Effect</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            position: relative;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .pixel {
-            width: 10px;
-            height: 10px;
-            box-sizing: border-box;
-        }
-        input[type="file"] {
-            display: none;
-        }
-        label {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .spinner {
-            display: none;
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border-left-color: #007bff;
-            animation: spin 1s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div>
         <label for="file-input">Upload Image</label>
         <input type="file" id="file-input" accept="image/*">
     </div>
+    <div>
+        <label for="width-slider">Pixels Width: </label>
+        <input type="range" id="width-slider" min="10" max="100" value="30" step="1">
+        <span id="width-value">30</span>
+    </div>
     <div class="container" id="container">
         <div class="spinner" id="spinner"></div>
     </div>
-
-    <script>
-        function applyGrayscale(ctx, width, height) {
-            const imageData = ctx.getImageData(0, 0, width, height);
-            const data = imageData.data;
-            for (let i = 0; i < data.length; i += 4) {
-                const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                data[i] = data[i + 1] = data[i + 2] = avg;
-            }
-            ctx.putImageData(imageData, 0, 0);
-        }
-
-        function loadImage(src) {
-            const img = new Image();
-            img.src = src;
-            img.onload = function () {
-                const spinner = document.getElementById('spinner');
-                spinner.style.display = 'block';
-
-                setTimeout(() => {
-                    const aspectRatio = img.height / img.width;
-                    const newWidth = 30;
-                    const newHeight = Math.round(newWidth * aspectRatio);
-                    const canvas = document.createElement('canvas');
-                    canvas.width = newWidth;
-                    canvas.height = newHeight;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
-                    applyGrayscale(ctx, newWidth, newHeight);
-
-                    const container = document.getElementById('container');
-                    container.innerHTML = '';
-                    container.style.width = `${newWidth * 10}px`;
-                    container.style.height = `${newHeight * 10}px`;
-                    const pixels = [];
-                    for (let y = 0; y < newHeight; y++) {
-                        for (let x = 0; x < newWidth; x++) {
-                            const pixelData = ctx.getImageData(x, y, 1, 1).data;
-                            const pixelDiv = document.createElement('div');
-                            pixelDiv.style.backgroundColor = `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
-                            pixelDiv.classList.add('pixel');
-                            pixelDiv.dataset.x = x;
-                            pixelDiv.dataset.y = y;
-                            container.appendChild(pixelDiv);
-                            pixels.push(pixelDiv);
-                        }
-                    }
-
-                    container.addEventListener('mousemove', (e) => {
-                        const rect = container.getBoundingClientRect();
-                        const mouseX = e.clientX - rect.left;
-                        const mouseY = e.clientY - rect.top;
-                        const threshold = 50;
-                        pixels.forEach((pixel) => {
-                            const px = parseInt(pixel.dataset.x) * 10 + 5;
-                            const py = parseInt(pixel.dataset.y) * 10 + 5;
-                            const distance = Math.sqrt(Math.pow(mouseX - px, 2) + Math.pow(mouseY - py, 2));
-                            if (distance < threshold) {
-                                pixel.style.opacity = 1;
-                            } else {
-                                pixel.style.opacity = 0;
-                            }
-                        });
-                    });
-
-                    spinner.style.display = 'none';
-                }, 500);
-            };
-        }
-
-        document.getElementById('file-input').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            loadImage(URL.createObjectURL(file));
-        });
-
-        // Load the default image when the site loads
-        loadImage('default.jpg');
-    </script>
+    <div class="flashlight" id="flashlight"></div>
+    <script src="scripts.js"></script>
 </body>
 </html>
