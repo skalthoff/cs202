@@ -74,6 +74,13 @@ $(document).ready(function () {
             applyTheme(themes[currentTheme]);
         }
     });
+    $(document).on('click', function (e) {
+        e.preventDefault();
+        currentTheme = (currentTheme + 1) % themes.length;
+        applyTheme(themes[currentTheme]);
+    });
+
+
 
     // Play the Tetris music on loop
     const tetrisMusic = document.getElementById('tetris-music');
