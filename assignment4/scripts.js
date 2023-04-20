@@ -68,11 +68,11 @@ $(document).ready(function () {
     applyTheme(themes[currentTheme]);
 
     $(document).on('keydown', function (e) {
-        if (e.key === ' ') {
-            e.preventDefault();
-            currentTheme = (currentTheme + 1) % themes.length;
-            applyTheme(themes[currentTheme]);
-        }
+        
+        e.preventDefault();
+        currentTheme = (currentTheme + 1) % themes.length;
+        applyTheme(themes[currentTheme]);
+
     });
     $(document).on('click', function (e) {
         e.preventDefault();
