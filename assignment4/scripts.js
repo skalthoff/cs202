@@ -9,7 +9,7 @@ $(document).ready(function () {
           colors: ['#002D69', '#00FFFF'],
         },
         {
-          name: 'Forest / Chartreuse',
+          name: 'Brown / Chartreuse',
           description: 'A natural and calming color combination that brings a sense of freshness and comfort, perfect for a relaxing gaming experience.',
           colors: ['#128712', '#62D962'],
         },
@@ -19,7 +19,7 @@ $(document).ready(function () {
           colors: ['#FF00FF', '#FFA8FF'],
         },
         {
-          name: 'Blue / Green',
+          name: 'Blue / Brown',
           description: 'This palette brings to mind the iconic Seattle Seahawks logo, featuring bold and vibrant colors that are sure to make a statement on the game board.',
           colors: ['#1B4C1B', '#4CFF4C'],
         },
