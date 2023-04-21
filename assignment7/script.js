@@ -22,7 +22,7 @@ fetch(
 const peopleContainer = document.getElementById("people-container");
 
 // Fetch the data from the People in Space API
-fetch("http://api.open-notify.org/astros.json")
+fetch("https://api.open-notify.org/astros.json")
   .then((response) => response.json())
   .then((data) => {
     // Mock altitude data
