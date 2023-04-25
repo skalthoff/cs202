@@ -22,8 +22,6 @@ $.getJSON("http://api.open-notify.org/astros.json?callback=?", function (peopleD
   });
 });
 
-
-// The rest of the functions remain unchanged...
 function displayPeopleInSpace(peopleData, issAltitude) {
   const groupedByCraft = groupPeopleByCraft(peopleData.people);
 
@@ -32,13 +30,14 @@ function displayPeopleInSpace(peopleData, issAltitude) {
     const craftPeople = groupedByCraft[craft];
 
     craftPeople.forEach((person) => {
-      const personElement = createPersonElement(person, issAltitude);
+      const personElement = createPersonElement(person, craft === "ISS" ? issAltitude : null);
       craftElement.appendChild(personElement);
     });
 
     peopleContainer.append(craftElement);
   }
 }
+
 
 
 function groupPeopleByCraft(people) {
@@ -63,12 +62,14 @@ function createCraftElement(craftName) {
 
   return craftElement;
 }
-
 function createPersonElement(person, altitude) {
   const personElement = document.createElement("div");
   personElement.classList.add("person");
 
-  personElement.textContent = `${person.name} (${altitude} m)`;
+  personElement.textContent = altitude
+    ? `${person.name} (ISS Altitude: ${altitude.toFixed(2)} km)`
+    : `${person.name}`;
 
   return personElement;
 }
+
