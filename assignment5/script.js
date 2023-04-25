@@ -15,7 +15,7 @@ $.getJSON(
 
 // Fetch the data from the People in Space API using jQuery
 // Fetch the data from the People in Space API using jQuery
-$.getJSON("http://api.open-notify.org/astros.json?callback=?", function (peopleData) {
+$.getJSON("https://api.open-notify.org/astros.json?callback=?", function (peopleData) {
   // Fetch the ISS altitude
   $.getJSON("https://api.wheretheiss.at/v1/satellites/25544", function (issData) {
     displayPeopleInSpace(peopleData, issData.altitude);
