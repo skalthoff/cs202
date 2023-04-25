@@ -1,6 +1,6 @@
-const EPIC_API_KEY = "EhjrQ7GHtgJ9eaYizPgqwY9ow5Y8rGIq3XJgEgbS";
 const peopleContainer = $("#people-container");
 
+const EPIC_API_KEY = "EhjrQ7GHtgJ9eaYizPgqwY9ow5Y8rGIq3XJgEgbS"
 // Fetch the latest image from EPIC API and set it as the background
 $.getJSON(
   `https://api.nasa.gov/EPIC/api/natural/images?api_key=${EPIC_API_KEY}`,
@@ -14,19 +14,17 @@ $.getJSON(
 );
 
 // Fetch the data from the People in Space API using jQuery
-$.getJSON("http://api.open-notify.org/astros.json?callback=?", function (data) {
-  // Mock altitude data
-  const mockAltitudeData = data.people.map((person, index) => ({
-    craft: person.craft,
-    altitude: (index + 1) * 10000, // Assuming a difference of 10,000 meters
-  }));
-
-  displayPeopleInSpace(data, mockAltitudeData);
+// Fetch the data from the People in Space API using jQuery
+$.getJSON("http://api.open-notify.org/astros.json?callback=?", function (peopleData) {
+  // Fetch the ISS altitude
+  $.getJSON("https://api.wheretheiss.at/v1/satellites/25544", function (issData) {
+    displayPeopleInSpace(peopleData, issData.altitude);
+  });
 });
 
-// The rest of the functions remain unchanged...
 
-function displayPeopleInSpace(peopleData, altitudeData) {
+// The rest of the functions remain unchanged...
+function displayPeopleInSpace(peopleData, issAltitude) {
   const groupedByCraft = groupPeopleByCraft(peopleData.people);
 
   for (const craft in groupedByCraft) {
@@ -34,12 +32,10 @@ function displayPeopleInSpace(peopleData, altitudeData) {
     const craftPeople = groupedByCraft[craft];
 
     craftPeople.forEach((person) => {
-      const altitude = altitudeData.find((data) => data.craft === craft).altitude;
-      const personElement = createPersonElement(person, altitude);
+      const personElement = createPersonElement(person, issAltitude);
       craftElement.appendChild(personElement);
     });
 
-    // Use the 'append' method instead of 'appendChild'
     peopleContainer.append(craftElement);
   }
 }
@@ -53,4 +49,26 @@ function groupPeopleByCraft(people) {
     grouped[person.craft].push(person);
     return grouped;
   }, {});
+}
+
+function createCraftElement(craftName) {
+  const craftElement = document.createElement("div");
+  craftElement.classList.add("craft");
+
+  const craftNameElement = document.createElement("div");
+  craftNameElement.classList.add("craft-name");
+  craftNameElement.textContent = craftName;
+
+  craftElement.appendChild(craftNameElement);
+
+  return craftElement;
+}
+
+function createPersonElement(person, altitude) {
+  const personElement = document.createElement("div");
+  personElement.classList.add("person");
+
+  personElement.textContent = `${person.name} (${altitude} m)`;
+
+  return personElement;
 }
