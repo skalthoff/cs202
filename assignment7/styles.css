@@ -1,0 +1,17 @@
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+header {
+  margin-bottom: 30px;
+}
+
+#note-name {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+button:focus {
+  outline: none;
+}
